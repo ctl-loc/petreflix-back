@@ -2,24 +2,27 @@ package org.example.petreflixback.repositories;
 
 import jakarta.annotation.PostConstruct;
 import org.apache.hc.client5.http.impl.ConnectionShutdownException;
+import org.example.petreflixback.interfaces.NasApiInterface;
 import org.example.petreflixback.model.Movie;
 import org.example.petreflixback.types.MovieOrSeries;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import reactor.core.publisher.Flux;
 
 import java.util.*;
 import java.util.logging.Logger;
 
 @Repository
-public class NasAPI {
+public class NasAPI implements NasApiInterface {
 
     @Value("${nas.address}")
     private String API_ADDR;
@@ -87,6 +90,10 @@ public class NasAPI {
     public MovieOrSeries[] fetch(boolean movie, boolean series) {
         return fetchByPath("/Films").stream().map(MovieOrSeries::movie).toArray(MovieOrSeries[]::new);
     }
+
+    @Override
+    public Flux<DataBuffer> download(UUID id) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public MovieOrSeries[] fetch() {
