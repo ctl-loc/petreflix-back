@@ -1,10 +1,9 @@
 package org.example.petreflixback.repositories;
 
-import io.vavr.control.Either;
 import jakarta.annotation.PostConstruct;
 import org.apache.hc.client5.http.impl.ConnectionShutdownException;
 import org.example.petreflixback.model.Movie;
-import org.example.petreflixback.model.Series;
+import org.example.petreflixback.types.MovieOrSeries;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -85,11 +84,12 @@ public class NasAPI {
         this.sid = data.get("sid").toString();
     }
 
-    public Either<Movie, Series>[] fetch(boolean movie, boolean series) {
-        return fetchByPath("/Films").stream().<Either<Movie, Series>>map(Either::left).toArray(n -> (Either<Movie, Series>[]) new Either[n]);
+    public MovieOrSeries[] fetch(boolean movie, boolean series) {
+        return fetchByPath("/Films").stream().map(MovieOrSeries::movie).toArray(MovieOrSeries[]::new);
+    }
     }
 
-    public Either<Movie, Series>[] fetch() {
+    public MovieOrSeries[] fetch() {
         return fetch(true, true);
     }
 
