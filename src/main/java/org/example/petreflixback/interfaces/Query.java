@@ -1,4 +1,4 @@
-package org.example.petreflixback;
+package org.example.petreflixback.interfaces;
 
 import org.springframework.http.ResponseEntity;
 

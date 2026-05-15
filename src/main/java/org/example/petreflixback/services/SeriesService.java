@@ -1,6 +1,6 @@
 package org.example.petreflixback.services;
 
-import org.example.petreflixback.Query;
+import org.example.petreflixback.interfaces.Query;
 import org.example.petreflixback.model.Series;
 import org.springframework.http.ResponseEntity;
 
